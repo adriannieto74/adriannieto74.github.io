@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compra y venta de zapatillas, tanto nuevas como de reventa, en nuestra tienda online. ¡Vende tus zapatillas hoy mismo y encuentra las mejores ofertas en sneakers!">
+    <meta name="keywords" content="venta zapatillas, sneakers, zapatillas reventa, tienda zapatillas, compra zapatillas online, vende tus zapatillas, zapatos deportivos">
+    <meta name="author" content="Tu Tienda de Zapatillas">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Compra y Vende Zapatillas Online | Tu Tienda de Zapatillas">
+    <meta property="og:description" content="Compra zapatillas nuevas y de reventa en nuestra tienda online. Si tienes zapatillas usadas, ¡véndelas ahora!">
+    <meta property="og:image" content="imagen_og.jpg">
+    <meta property="og:url" content="https://www.tutiendazapatillas.com">
+    <title>Tu Tienda de Zapatillas - Compra y Vende Sneakers</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <link rel="canonical" href="https://www.tutiendazapatillas.com">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home" title="Inicio de la tienda">Inicio</a></li>
+                <li><a href="#shop" title="Tienda de zapatillas">Tienda</a></li>
+                <li><a href="#sell" title="Vende tus zapatillas">Vende tus Zapatillas</a></li>
+                <li><a href="#contact" title="Contacto de la tienda">Contacto</a></li>
+            </ul>
+        </nav>
+        <h1>Bienvenido a Tu Tienda de Zapatillas - La Mejor Tienda de Sneakers</h1>
+    </header>
+
+    <main>
+        <!-- Sección de Inicio -->
+        <section id="home">
+            <h2>Compra y Vende Zapatillas de Todo Tipo</h2>
+            <p>Explora nuestra selección de zapatillas nuevas y de reventa. ¿Tienes unas zapatillas que ya no usas? ¡Véndelas aquí y gana dinero!</p>
+            <img src="images/banner_zapatillas.jpg" alt="Banner promocional con zapatillas deportivas" class="banner-image">
+        </section>
+
+        <!-- Sección de Tienda -->
+        <section id="shop">
+            <h2>Tienda de Zapatillas</h2>
+            <p>Encuentra las mejores zapatillas deportivas y de moda de las mejores marcas.</p>
+            <div class="product-container">
+                <div class="product">
+                    <img src="images/nike_air_max.jpg" alt="Nike Air Max 2021 - Zapatillas deportivas" />
+                    <h3><a href="/producto/nike-air-max-2021" title="Nike Air Max 2021 - Zapatillas deportivas">Nike Air Max 2021</a></h3>
+                    <p>$120</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="images/adidas_ultraboost.jpg" alt="Adidas Ultraboost 2021 - Zapatillas de running" />
+                    <h3><a href="/producto/adidas-ultraboost-2021" title="Adidas Ultraboost 2021 - Zapatillas de running">Adidas Ultraboost 2021</a></h3>
+                    <p>$150</p>
+                    <button>Comprar</button>
+                </div>
+                <div class="product">
+                    <img src="images/puma_suede.jpg" alt="Puma Suede Classic - Zapatillas urbanas" />
+                    <h3><a href="/producto/puma-suede-classic" title="Puma Suede Classic - Zapatillas urbanas">Puma Suede Classic</a></h3>
+                    <p>$90</p>
+                    <button>Comprar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección para vender zapatillas -->
+        <section id="sell">
+            <h2>Vende tus Zapatillas</h2>
+            <p>Si tienes zapatillas que ya no usas, ¡esta es tu oportunidad para venderlas! Completa el formulario y ponlas a la venta en nuestra tienda.</p>
+            <form id="sellForm">
+                <label for="zapatilla-name">Nombre de las Zapatillas:</label>
+                <input type="text" id="zapatilla-name" name="zapatilla-name" required>
+
+                <label for="zapatilla-price">Precio de Venta:</label>
+                <input type="number" id="zapatilla-price" name="zapatilla-price" required>
+
+                <label for="zapatilla-image">Imagen de las Zapatillas:</label>
+                <input type="file" id="zapatilla-image" name="zapatilla-image" accept="image/*" required>
+
+                <button type="submit">Vender</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Sección de Contacto -->
+    <footer id="contact">
+        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
