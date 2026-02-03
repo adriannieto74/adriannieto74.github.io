@@ -5,8 +5,9 @@
     box-sizing: border-box;
 }
 
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
@@ -14,16 +15,28 @@ body {
 
 /* Encabezado */
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
+    background-color: #6200ea;
+    color: white;
     text-align: center;
+    padding: 50px 20px;
 }
 
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+/* Barra de navegación */
 nav ul {
     list-style: none;
+    padding: 0;
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
 
 nav ul li {
@@ -31,81 +44,127 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
 }
 
-h1, h2, h3 {
-    color: #333;
-    margin-bottom: 20px;
+nav ul li a:hover {
+    color: #ff4081;
 }
 
-/* Banner */
-.banner-image {
-    width: 100%;
-    height: auto;
-}
-
-/* Tienda de productos */
-.product-container {
-    display: flex;
-    justify-content: space-between;
+/* Rejilla de anuncios */
+.advertisements {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    justify-items: center;
+    padding: 0 20px;
 }
 
-.product {
+.ad {
     background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 200px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    width: 250px;
+    height: 350px;
 }
 
-.product img {
+.ad img {
     width: 100%;
     height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
-button {
-    padding: 10px;
-    background-color: #333;
+.ad h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.ad p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.ad button {
+    background-color: #6200ea;
     color: white;
     border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
 }
 
-button:hover {
-    background-color: #555;
+.ad button:hover {
+    background-color: #ff4081;
 }
 
-/* Formulario */
-form {
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Efectos hover */
+.ad:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-form input, form button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.ad:hover img {
+    transform: scale(1.1);
 }
 
-/* Pie de página */
+/* Responsive design */
+@media (max-width: 768px) {
+    #home h2 {
+        font-size: 2rem;
+    }
+
+    .advertisements {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .ad {
+        width: 220px;
+        height: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    #home h2 {
+        font-size: 1.8rem;
+    }
+
+    .advertisements {
+        grid-template-columns: 1fr;
+    }
+
+    .ad {
+        width: 100%;
+    }
+}
+
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #333;
+    background-color: #6200ea;
     color: white;
 }
+
+footer p {
+    font-size: 1rem;
+}
+
+footer a {
+    color: #ff4081;
+    text-decoration: none;
+}
+

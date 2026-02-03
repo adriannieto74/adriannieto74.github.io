@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras | Tu Tienda de Zapatillas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="shop.html">Tienda</a></li>
+                <li><a href="cart.html">Carrito</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="cart">
+            <h2>Carrito de Compras</h2>
+            <div id="cart-items">
+                <!-- Los artículos del carrito se cargarán aquí dinámicamente -->
+            </div>
+            <div id="cart-summary">
+                <p>Total: <span id="total-price">$0</span></p>
+                <button id="checkout-button">Finalizar Compra</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItems = document.getElementById('cart-items');
+            const totalPrice = document.getElementById('total-price');
+            cartItems.innerHTML = ''; // Limpiar los artículos existentes
+
+            let total = 0;
+            cart.forEach(item => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('cart-item');
+                productDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>$${item.price}</p>
+                `;
+                cartItems.appendChild(productDiv);
+                total += item.price;
+            });
+
+            totalPrice.textContent = `$${total}`;
+        };
+    </script>
+</body>
+</html>
