@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página No Encontrada - 404</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <h1>¡Vaya! Página no encontrada (Error 404)</h1>
-    </header>
-    <main>
-        <p>Lo sentimos, la página que buscas no existe o ha sido movida. Puedes intentar volver a la <a href="index.html">página de inicio</a> o buscar lo que necesitas:</p>
-        <form action="/search" method="get">
-            <input type="text" name="q" placeholder="Buscar...">
-            <button type="submit">Buscar</button>
-        </form>
-    </main>
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | Todos los derechos reservados.</p>
-    </footer>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+</header>
+
+<main>
+  <div class="error-page" style="flex-direction:column; gap:20px;">
+    <div class="error-code">404</div>
+    <div>
+      <div class="section-tag" style="justify-content:center; margin-bottom:12px;">Página no encontrada</div>
+      <h2 class="section-title" style="text-align:center; font-size:3rem;">ESTE PAR NO<br><span>EXISTE</span></h2>
+    </div>
+    <p style="color:var(--gray3); text-align:center; max-width:400px;">
+      La página que buscas ha sido movida o no existe. Vuelve al inicio y encuentra tu par perfecto.
+    </p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-top:10px;">
+      <a href="index.html" class="btn-primary"><i class="fa-solid fa-house"></i> Ir al Inicio</a>
+      <a href="shop.html" class="btn-ghost"><i class="fa-solid fa-store"></i> Ver Tienda</a>
+    </div>
+  </div>
+</main>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+</script>
 </body>
 </html>
