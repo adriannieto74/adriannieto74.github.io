@@ -1,40 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto | Tu Tienda de Zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contacto — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="shop.html">Tienda</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="contact">
-            <h2>Contacto</h2>
-            <form>
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" required>
-                <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" required>
-                <label for="message">Mensaje:</label>
-                <textarea id="message" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </section>
-    </main>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+<div id="toast-container"></div>
 
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
-    </footer>
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="shop.html"><i class="fa-solid fa-store"></i> Tienda</a></li>
+      <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> Carrito</a></li>
+      <li><a href="contact.html" class="active"><i class="fa-regular fa-envelope"></i> Contacto</a></li>
+      <li><a href="login.html"><i class="fa-regular fa-user"></i> Acceder</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="form-section" style="min-height:100vh;">
+    <div style="max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;">
+      <div>
+        <div class="section-tag">Soporte</div>
+        <h2 class="section-title">HABLEMOS<br><span>CON TÚ</span></h2>
+        <p style="color:var(--gray3); margin:24px 0; line-height:1.8;">Nuestro equipo de expertos en sneakers está disponible para resolver cualquier duda sobre autenticidad, envíos o productos.</p>
+
+        <div style="display:flex; flex-direction:column; gap:20px; margin-top:40px;">
+          <div style="display:flex; gap:16px; align-items:center;">
+            <div class="feature-icon" style="flex-shrink:0;"><i class="fa-regular fa-envelope"></i></div>
+            <div>
+              <div style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:2px; color:var(--gray3); margin-bottom:4px;">EMAIL</div>
+              <a href="mailto:hola@soleculture.es" style="color:var(--white); text-decoration:none; font-weight:600;">hola@soleculture.es</a>
+            </div>
+          </div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <div class="feature-icon" style="flex-shrink:0;"><i class="fa-solid fa-clock"></i></div>
+            <div>
+              <div style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:2px; color:var(--gray3); margin-bottom:4px;">HORARIO</div>
+              <div style="color:var(--white); font-weight:600;">Lun–Vie, 9:00–19:00</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:16px; align-items:center;">
+            <div class="feature-icon" style="flex-shrink:0;"><i class="fa-solid fa-bolt"></i></div>
+            <div>
+              <div style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:2px; color:var(--gray3); margin-bottom:4px;">RESPUESTA</div>
+              <div style="color:var(--white); font-weight:600;">Menos de 24 horas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="margin:0; animation: fadeUp 0.6s ease both;">
+        <div class="form-group">
+          <label class="form-label" for="name"><i class="fa-regular fa-user"></i> Nombre</label>
+          <input class="form-input" type="text" id="name" placeholder="Tu nombre completo" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email"><i class="fa-regular fa-envelope"></i> Email</label>
+          <input class="form-input" type="email" id="email" placeholder="tu@email.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject"><i class="fa-solid fa-tag"></i> Asunto</label>
+          <select class="form-input" id="subject">
+            <option>Consulta sobre producto</option>
+            <option>Problema con pedido</option>
+            <option>Devolución</option>
+            <option>Autenticidad</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message"><i class="fa-regular fa-comment"></i> Mensaje</label>
+          <textarea class="form-input" id="message" placeholder="¿En qué podemos ayudarte?" rows="5" required></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%; justify-content:center;" onclick="submitForm()">
+          <i class="fa-solid fa-paper-plane"></i> Enviar Mensaje
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="main-footer">
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 <a href="index.html">SOLE CULTURE</a></p>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+
+  function showToast(msg) {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 3000);
+  }
+
+  function submitForm() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const msg = document.getElementById('message').value;
+    if (!name || !email || !msg) { showToast('⚠️ Por favor rellena todos los campos'); return; }
+    showToast(`¡Gracias ${name}! Te responderemos en menos de 24h ✓`);
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+  }
+</script>
 </body>
 </html>

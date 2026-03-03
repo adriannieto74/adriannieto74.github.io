@@ -1,51 +1,177 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de Zapatillas | Tu Tienda de Zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tienda — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="shop.html">Tienda</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="shop">
-            <h2>Tienda de Zapatillas</h2>
-            <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Buscar zapatillas...">
-                <button onclick="searchProducts()">Buscar</button>
-            </div>
-            <div class="filters">
-                <h3>Filtros</h3>
-                <select id="filter-category" onchange="filterProducts()">
-                    <option value="all">Todas las Categorías</option>
-                    <option value="running">Running</option>
-                    <option value="casual">Casual</option>
-                    <option value="basketball">Basketball</option>
-                </select>
-                <input type="number" id="filter-price" placeholder="Max. Precio" onchange="filterProducts()">
-            </div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+<div id="toast-container"></div>
 
-            <div class="product-container" id="product-container">
-                <!-- Los productos se cargarán aquí dinámicamente -->
-            </div>
-        </section>
-    </main>
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="shop.html" class="active"><i class="fa-solid fa-store"></i> Tienda</a></li>
+      <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> Carrito <span class="nav-cart-badge" id="cart-badge">0</span></a></li>
+      <li><a href="rewards.html"><i class="fa-solid fa-star"></i> Rewards</a></li>
+      <li><a href="contact.html"><i class="fa-regular fa-envelope"></i> Contacto</a></li>
+      <li><a href="login.html"><i class="fa-regular fa-user"></i> Acceder</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
-    </footer>
+<main>
+  <section id="shop">
+    <div data-aos="fade-up">
+      <div class="section-tag">Catálogo Completo</div>
+      <h2 class="section-title">TODA LA<br><span>COLECCIÓN</span></h2>
+    </div>
 
-    <script src="script.js"></script>
+    <div class="shop-controls" style="margin-top:40px;" data-aos="fade-up" data-aos-delay="100">
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="search-bar" placeholder="Buscar zapatillas, marcas..." oninput="filterProducts()"/>
+      </div>
+      <select class="filter-select" id="filter-category" onchange="filterProducts()">
+        <option value="all">Todas las Categorías</option>
+        <option value="running">Running</option>
+        <option value="casual">Casual</option>
+        <option value="basketball">Basketball</option>
+        <option value="limited">Limited Edition</option>
+      </select>
+      <select class="filter-select" id="filter-brand" onchange="filterProducts()">
+        <option value="all">Todas las Marcas</option>
+        <option value="nike">Nike</option>
+        <option value="adidas">Adidas</option>
+      </select>
+      <select class="filter-select" id="filter-price" onchange="filterProducts()">
+        <option value="all">Todos los Precios</option>
+        <option value="100">Hasta $100</option>
+        <option value="150">Hasta $150</option>
+        <option value="200">Hasta $200</option>
+      </select>
+    </div>
+
+    <div style="margin: 16px 0 40px; font-size:0.85rem; color: var(--gray3); font-family: var(--font-mono);" id="results-count" data-aos="fade-up"></div>
+
+    <div class="products-grid" id="product-container"></div>
+  </section>
+</main>
+
+<footer class="main-footer">
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 <a href="index.html">SOLE CULTURE</a> — Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="script.js"></script>
+<script>
+  AOS.init({ duration: 600, once: true });
+
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+
+  function updateBadge() {
+    const c = JSON.parse(localStorage.getItem('cart'))||[];
+    document.getElementById('cart-badge').textContent = c.length;
+  }
+  updateBadge();
+
+  function showToast(msg) {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 2800);
+  }
+
+  window.addToCart = function(product) {
+    const cart = JSON.parse(localStorage.getItem('cart'))||[];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showToast(`<strong>${product.name}</strong> añadido al carrito ✓`);
+    updateBadge();
+  };
+
+  const allProducts = [
+    { name:'Nike Air Max 270', price:120, brand:'nike', cat:'casual', image:'https://upload.wikimedia.org/wikipedia/commons/0/0e/Air_Max_270_Sail_Lilac_on_feet.jpg', badge:'🔥 Hot' },
+    { name:'Nike Air Max 270 React', price:150, brand:'nike', cat:'casual', image:'https://upload.wikimedia.org/wikipedia/commons/6/69/Nike_Air_Max_270_BV2517-400.jpg', badge:null },
+    { name:'Nike React Infinity Run Flyknit', price:130, brand:'nike', cat:'running', image:'https://cdn.pixabay.com/photo/2021/09/16/17/05/sneakers-6628453_1280.jpg', badge:'Nuevo' },
+    { name:'Nike Zoom Freak 3', price:160, brand:'nike', cat:'basketball', image:'https://upload.wikimedia.org/wikipedia/commons/4/43/Nike_Zoom_Freak_3.jpg', badge:null },
+    { name:'Air Jordan 1 Retro', price:190, brand:'nike', cat:'basketball', image:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80', badge:'Limited' },
+    { name:'Adidas Stan Smith', price:100, brand:'adidas', cat:'casual', image:'https://upload.wikimedia.org/wikipedia/commons/5/51/Stan_Smith_Shoes_%28cropped%29.jpg', badge:null },
+    { name:'Adidas Samba OG', price:110, brand:'adidas', cat:'casual', image:'https://cdn.pixabay.com/photo/2020/02/12/16/26/adidas-4841395_1280.jpg', badge:null },
+    { name:'Adidas Yeezy Boost 350 V2', price:220, brand:'adidas', cat:'limited', image:'https://upload.wikimedia.org/wikipedia/commons/6/69/Adidas_Yeezy_Boost_350_V2.jpg', badge:'Limited' },
+    { name:'Nike Air Force 1', price:110, brand:'nike', cat:'casual', image:'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&q=80', badge:null },
+    { name:'Adidas Ultraboost 22', price:180, brand:'adidas', cat:'running', image:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&q=80', badge:'Nuevo' },
+  ];
+
+  function renderProducts(list) {
+    const container = document.getElementById('product-container');
+    const count = document.getElementById('results-count');
+    count.textContent = `${list.length} producto${list.length !== 1 ? 's' : ''} encontrado${list.length !== 1 ? 's' : ''}`;
+    if (list.length === 0) {
+      container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--gray3);">
+        <div style="font-size:3rem; margin-bottom:16px;">🔍</div>
+        <div style="font-family:var(--font-display);font-size:2rem;letter-spacing:2px;">SIN RESULTADOS</div>
+        <p style="margin-top:10px;">Prueba con otros filtros o usa el chatbot para buscar</p>
+      </div>`;
+      return;
+    }
+    container.innerHTML = list.map((p, i) => `
+      <div class="product-card" data-aos="fade-up" data-aos-delay="${(i%4)*80}">
+        <div class="product-img-wrap">
+          ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+          <img src="${p.image}" alt="${p.name}" loading="lazy"/>
+          <div class="product-actions">
+            <button class="product-action-btn"><i class="fa-regular fa-heart"></i></button>
+            <button class="product-action-btn"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">${p.brand.charAt(0).toUpperCase()+p.brand.slice(1)}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-footer">
+            <div class="product-price">$${p.price} <span>USD</span></div>
+            <button class="product-add" onclick="addToCart(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+              <i class="fa-solid fa-plus"></i> Añadir
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    AOS.refresh();
+  }
+
+  function filterProducts() {
+    const q = document.getElementById('search-bar').value.toLowerCase();
+    const cat = document.getElementById('filter-category').value;
+    const brand = document.getElementById('filter-brand').value;
+    const maxPrice = document.getElementById('filter-price').value;
+    let filtered = allProducts.filter(p => {
+      const matchQ = p.name.toLowerCase().includes(q) || p.brand.includes(q);
+      const matchCat = cat === 'all' || p.cat === cat;
+      const matchBrand = brand === 'all' || p.brand === brand;
+      const matchPrice = maxPrice === 'all' || p.price <= parseInt(maxPrice);
+      return matchQ && matchCat && matchBrand && matchPrice;
+    });
+    renderProducts(filtered);
+  }
+
+  renderProducts(allProducts);
+</script>
 </body>
 </html>

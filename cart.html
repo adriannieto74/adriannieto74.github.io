@@ -1,62 +1,130 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras | Tu Tienda de Zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrito — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="shop.html">Tienda</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="cart">
-            <h2>Carrito de Compras</h2>
-            <div id="cart-items">
-                <!-- Los artículos del carrito se cargarán aquí dinámicamente -->
-            </div>
-            <div id="cart-summary">
-                <p>Total: <span id="total-price">$0</span></p>
-                <button id="checkout-button">Finalizar Compra</button>
-            </div>
-        </section>
-    </main>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+<div id="toast-container"></div>
 
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
-    </footer>
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="shop.html"><i class="fa-solid fa-store"></i> Tienda</a></li>
+      <li><a href="cart.html" class="active"><i class="fa-solid fa-bag-shopping"></i> Carrito <span class="nav-cart-badge" id="cart-badge">0</span></a></li>
+      <li><a href="rewards.html"><i class="fa-solid fa-star"></i> Rewards</a></li>
+      <li><a href="contact.html"><i class="fa-regular fa-envelope"></i> Contacto</a></li>
+      <li><a href="login.html"><i class="fa-regular fa-user"></i> Acceder</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <script>
-        window.onload = function() {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartItems = document.getElementById('cart-items');
-            const totalPrice = document.getElementById('total-price');
-            cartItems.innerHTML = ''; // Limpiar los artículos existentes
+<main>
+  <section id="cart">
+    <div style="margin-bottom:40px;">
+      <div class="section-tag">Mi Compra</div>
+      <h2 class="section-title">MI <span>CARRITO</span></h2>
+    </div>
 
-            let total = 0;
-            cart.forEach(item => {
-                const productDiv = document.createElement('div');
-                productDiv.classList.add('cart-item');
-                productDiv.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}">
-                    <h3>${item.name}</h3>
-                    <p>$${item.price}</p>
-                `;
-                cartItems.appendChild(productDiv);
-                total += item.price;
-            });
+    <div class="cart-layout" id="cart-layout">
+      <!-- Filled by JS -->
+    </div>
+  </section>
+</main>
 
-            totalPrice.textContent = `$${total}`;
-        };
-    </script>
+<footer class="main-footer">
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 <a href="index.html">SOLE CULTURE</a></p>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+
+  function showToast(msg) {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 2800);
+  }
+
+  function renderCart() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    document.getElementById('cart-badge').textContent = cart.length;
+    const layout = document.getElementById('cart-layout');
+
+    if (cart.length === 0) {
+      layout.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center; padding:100px 20px; color:var(--gray3);">
+          <div style="font-size:4rem; margin-bottom:20px;">🛍️</div>
+          <div style="font-family:var(--font-display);font-size:3rem;letter-spacing:3px;color:var(--white);">CARRITO VACÍO</div>
+          <p style="margin:16px auto; max-width:360px;">Aún no has añadido ningún par. ¡Explora el catálogo y encuentra tu próximo favorito!</p>
+          <a href="shop.html" class="btn-primary" style="margin-top:24px; display:inline-flex;">
+            <i class="fa-solid fa-store"></i> Ir a la Tienda
+          </a>
+        </div>`;
+      return;
+    }
+
+    let total = 0;
+    const itemsHTML = cart.map((item, i) => {
+      total += item.price;
+      return `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/80x80/1a1a1a/888?text=?'"/>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${item.price} USD</div>
+          </div>
+          <button class="cart-item-remove" onclick="removeItem(${i})" title="Eliminar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>`;
+    }).join('');
+
+    const shipping = total > 150 ? 0 : 9.99;
+    const grandTotal = total + shipping;
+
+    layout.innerHTML = `
+      <div>${itemsHTML}</div>
+      <div class="cart-summary-box">
+        <div class="cart-summary-title">Resumen</div>
+        <div class="summary-row"><span>Subtotal (${cart.length} art.)</span><span>$${total.toFixed(2)}</span></div>
+        <div class="summary-row"><span>Envío express</span><span>${shipping === 0 ? '<span style="color:#00e676">Gratis</span>' : '$'+shipping.toFixed(2)}</span></div>
+        ${shipping > 0 ? `<div style="font-size:0.75rem; color:var(--accent); margin-bottom:12px; font-family:var(--font-mono);">Compra más de $150 y envío gratis</div>` : ''}
+        <div class="summary-row total"><span>Total</span><span>$${grandTotal.toFixed(2)}</span></div>
+        <a href="payment.html" class="btn-primary" style="width:100%; justify-content:center; margin-top:24px; display:flex;">
+          <i class="fa-solid fa-lock"></i> Finalizar Compra
+        </a>
+        <a href="shop.html" class="btn-ghost" style="width:100%; justify-content:center; margin-top:10px; display:flex;">
+          <i class="fa-solid fa-arrow-left"></i> Seguir Comprando
+        </a>
+      </div>`;
+  }
+
+  function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const removed = cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showToast(`${removed[0]?.name} eliminado del carrito`);
+    renderCart();
+  }
+
+  renderCart();
+</script>
 </body>
 </html>

@@ -1,46 +1,165 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagar | Tu Tienda de Zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pago Seguro — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="shop.html">Tienda</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="payment">
-            <h2>Proceso de Pago</h2>
-            <form id="payment-form">
-                <label for="card-number">Número de Tarjeta:</label>
-                <input type="text" id="card-number" required>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+<div id="toast-container"></div>
 
-                <label for="expiration-date">Fecha de Expiración:</label>
-                <input type="text" id="expiration-date" placeholder="MM/AA" required>
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="cart.html"><i class="fa-solid fa-arrow-left"></i> Volver al Carrito</a></li>
+    </ul>
+  </nav>
+</header>
 
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" required>
+<main>
+  <section class="form-section" style="min-height:100vh; display:flex; align-items:center; justify-content:center;">
+    <div style="width:100%; max-width:520px;">
+      <!-- Secure badge -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:30px; color:var(--gray3); font-size:0.8rem; font-family:var(--font-mono);">
+        <i class="fa-solid fa-lock" style="color:#00e676;"></i>
+        PAGO 100% SEGURO Y CIFRADO
+      </div>
 
-                <button type="submit">Pagar</button>
-            </form>
-            <div id="payment-status"></div>
-        </section>
-    </main>
+      <div class="form-card" style="margin:0; animation: fadeUp 0.6s ease both;">
+        <div class="form-title">PAGO</div>
+        <p class="form-subtitle">Introduce los datos de tu tarjeta</p>
 
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
-    </footer>
+        <!-- Card preview -->
+        <div id="card-preview" style="
+          background: linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 100%);
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          padding: 28px;
+          margin-bottom: 30px;
+          font-family: var(--font-mono);
+          position: relative;
+          overflow: hidden;
+        ">
+          <div style="position:absolute; top:-30px; right:-30px; width:150px; height:150px; border-radius:50%; background:rgba(255,61,0,0.08);"></div>
+          <div style="position:absolute; bottom:-50px; left:-20px; width:180px; height:180px; border-radius:50%; background:rgba(255,190,0,0.04);"></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <div style="font-family:var(--font-display); font-size:1.2rem; letter-spacing:3px; color:var(--white);">SOLE<span style="color:var(--accent)">.</span></div>
+            <i class="fa-brands fa-cc-visa" style="font-size:2rem; color:var(--gray3);"></i>
+          </div>
+          <div id="preview-number" style="font-size:1.1rem; letter-spacing:4px; color:var(--white); margin-bottom:24px;">•••• •••• •••• ••••</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-size:0.6rem; letter-spacing:2px; color:var(--gray3); margin-bottom:4px;">TITULAR</div>
+              <div id="preview-name" style="font-size:0.85rem; color:var(--white);">NOMBRE APELLIDO</div>
+            </div>
+            <div>
+              <div style="font-size:0.6rem; letter-spacing:2px; color:var(--gray3); margin-bottom:4px;">CADUCA</div>
+              <div id="preview-exp" style="font-size:0.85rem; color:var(--white);">MM/AA</div>
+            </div>
+          </div>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="form-group">
+          <label class="form-label" for="card-holder"><i class="fa-regular fa-user"></i> Nombre del titular</label>
+          <input class="form-input" type="text" id="card-holder" placeholder="Nombre como aparece en la tarjeta" oninput="updatePreview()" style="text-transform:uppercase;"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="card-number"><i class="fa-regular fa-credit-card"></i> Número de tarjeta</label>
+          <input class="form-input" type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this); updatePreview()"/>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label" for="exp"><i class="fa-regular fa-calendar"></i> Fecha Exp.</label>
+            <input class="form-input" type="text" id="exp" placeholder="MM/AA" maxlength="5" oninput="formatExp(this); updatePreview()"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cvv"><i class="fa-solid fa-shield-halved"></i> CVV</label>
+            <input class="form-input" type="password" id="cvv" placeholder="•••" maxlength="4"/>
+          </div>
+        </div>
+
+        <div id="order-total" style="background:var(--gray2); border-radius:var(--radius); padding:16px 20px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="color:var(--gray3); font-size:0.9rem;">Total a pagar</span>
+          <span style="font-family:var(--font-display); font-size:1.8rem; color:var(--accent);" id="total-display">$0</span>
+        </div>
+
+        <button class="btn-primary" style="width:100%; justify-content:center;" onclick="processPay()" id="pay-btn">
+          <i class="fa-solid fa-lock"></i> Pagar Ahora
+        </button>
+
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; opacity:0.5;">
+          <i class="fa-brands fa-cc-visa" style="font-size:1.6rem;"></i>
+          <i class="fa-brands fa-cc-mastercard" style="font-size:1.6rem;"></i>
+          <i class="fa-brands fa-cc-paypal" style="font-size:1.6rem;"></i>
+          <i class="fa-brands fa-cc-apple-pay" style="font-size:1.6rem;"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+
+  function showToast(msg) {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast'; t.innerHTML = msg; c.appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 3000);
+  }
+
+  // Load cart total
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const total = cart.reduce((s, i) => s + i.price, 0);
+  document.getElementById('total-display').textContent = '$' + total.toFixed(2);
+
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+  function formatExp(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
+    input.value = v;
+  }
+  function updatePreview() {
+    const num = document.getElementById('card-number').value || '•••• •••• •••• ••••';
+    const name = document.getElementById('card-holder').value || 'NOMBRE APELLIDO';
+    const exp = document.getElementById('exp').value || 'MM/AA';
+    document.getElementById('preview-number').textContent = num.length > 4 ? num : '•••• •••• •••• ••••';
+    document.getElementById('preview-name').textContent = name.toUpperCase() || 'NOMBRE APELLIDO';
+    document.getElementById('preview-exp').textContent = exp || 'MM/AA';
+  }
+
+  function processPay() {
+    const n = document.getElementById('card-number').value.replace(/\s/g, '');
+    const e = document.getElementById('exp').value;
+    const c = document.getElementById('cvv').value;
+    const h = document.getElementById('card-holder').value;
+    if (!n || n.length < 16 || !e || !c || !h) {
+      showToast('<i class="fa-solid fa-triangle-exclamation" style="color:#ffbe00"></i> Por favor rellena todos los campos correctamente');
+      return;
+    }
+    const btn = document.getElementById('pay-btn');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
+    btn.disabled = true;
+    setTimeout(() => {
+      localStorage.removeItem('cart');
+      showToast('<i class="fa-solid fa-check-circle" style="color:#00e676"></i> ¡Pago completado! Redirigiendo...');
+      setTimeout(() => window.location.href = 'index.html', 2000);
+    }, 2000);
+  }
+</script>
 </body>
 </html>

@@ -1,38 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión | Tu Tienda de Zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="shop.html">Tienda</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="login">
-            <h2>Iniciar Sesión</h2>
-            <form>
-                <label for="username">Nombre de Usuario:</label>
-                <input type="text" id="username" required>
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" required>
-                <button type="submit">Iniciar Sesión</button>
-            </form>
-        </section>
-    </main>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
 
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
-    </footer>
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="shop.html"><i class="fa-solid fa-store"></i> Tienda</a></li>
+      <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> Carrito</a></li>
+      <li><a href="login.html" class="active"><i class="fa-regular fa-user"></i> Acceder</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="form-section" style="min-height:100vh; display:flex; align-items:center; justify-content:center;">
+    <div class="form-card" style="width:100%; animation: fadeUp 0.6s ease both;">
+      <div style="text-align:center; font-size:2.5rem; margin-bottom:20px;">👟</div>
+      <div class="form-title" style="text-align:center;">BIENVENIDO</div>
+      <p class="form-subtitle" style="text-align:center;">Inicia sesión para acceder a tus pedidos, puntos y más</p>
+
+      <div class="form-group">
+        <label class="form-label" for="username"><i class="fa-regular fa-user"></i> Usuario</label>
+        <input class="form-input" type="text" id="username" placeholder="Tu nombre de usuario" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password"><i class="fa-solid fa-lock"></i> Contraseña</label>
+        <input class="form-input" type="password" id="password" placeholder="••••••••" required/>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; margin-bottom:24px;">
+        <a href="#" style="color:var(--accent); font-size:0.85rem; text-decoration:none;">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button class="btn-primary" style="width:100%; justify-content:center;" onclick="handleLogin()">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar Sesión
+      </button>
+
+      <div style="text-align:center; margin-top:24px; color:var(--gray3); font-size:0.88rem;">
+        ¿No tienes cuenta? <a href="#" style="color:var(--accent); text-decoration:none;">Regístrate gratis</a>
+      </div>
+
+      <div style="margin-top:30px; padding-top:24px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:10px;">
+        <button class="btn-ghost" style="width:100%; justify-content:center; gap:10px;">
+          <img src="https://www.google.com/favicon.ico" width="16" height="16"/> Continuar con Google
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+
+  function handleLogin() {
+    const u = document.getElementById('username').value;
+    const p = document.getElementById('password').value;
+    if (!u || !p) { alert('Por favor rellena todos los campos.'); return; }
+    alert('¡Bienvenido, ' + u + '! (Demo — sin backend)');
+    window.location.href = 'index.html';
+  }
+</script>
 </body>
 </html>

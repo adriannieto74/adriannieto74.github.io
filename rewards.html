@@ -1,35 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puntos de Recompensa | Tu Tienda de Zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rewards — SOLE CULTURE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="shop.html">Tienda</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="rewards">
-            <h2>Tu saldo de puntos</h2>
-            <p>Tienes <span id="reward-points">0</span> puntos acumulados. ¡Sigue comprando para ganar más!</p>
-            <button id="redeem-points">Canjear puntos</button>
-        </section>
-    </main>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+<div id="toast-container"></div>
 
-    <footer>
-        <p>&copy; 2025 Tu Tienda de Zapatillas | <a href="mailto:contacto@tiendazapatillas.com">contacto@tiendazapatillas.com</a></p>
-    </footer>
+<header>
+  <a href="index.html" class="header-logo">SOLE<span>.</span>CULTURE</a>
+  <nav>
+    <ul>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="shop.html"><i class="fa-solid fa-store"></i> Tienda</a></li>
+      <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> Carrito</a></li>
+      <li><a href="rewards.html" class="active"><i class="fa-solid fa-star"></i> Rewards</a></li>
+      <li><a href="contact.html"><i class="fa-regular fa-envelope"></i> Contacto</a></li>
+      <li><a href="login.html"><i class="fa-regular fa-user"></i> Acceder</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <script src="script.js"></script>
+<main>
+  <section class="rewards-hero" style="padding-top:120px;">
+    <div class="section-tag" style="justify-content:center; margin-bottom:16px;">Programa de Fidelización</div>
+    <h2 class="section-title" style="text-align:center;">SOLE<br><span>REWARDS</span></h2>
+    <p style="color:var(--gray3); margin-top:16px; max-width:480px; margin-left:auto; margin-right:auto;">
+      Gana puntos con cada compra y canjéalos por descuentos exclusivos, acceso anticipado a drops y mucho más.
+    </p>
+
+    <div class="points-display" data-aos="zoom-in">
+      <div class="points-num" id="reward-points">0</div>
+      <div class="points-label">Puntos Acumulados</div>
+      <div style="margin-top:20px; display:flex; gap:12px;">
+        <button class="btn-primary" id="redeem-btn" onclick="redeemPoints()">
+          <i class="fa-solid fa-gift"></i> Canjear Puntos
+        </button>
+        <button class="btn-ghost" onclick="earnPoints()">
+          <i class="fa-solid fa-plus"></i> Simular Compra
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div style="max-width:500px; margin:40px auto;" data-aos="fade-up">
+      <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.8rem; font-family:var(--font-mono); color:var(--gray3);">
+        <span>Nivel Bronce</span>
+        <span id="progress-label">0 / 500 pts para Plata</span>
+      </div>
+      <div style="height:6px; background:var(--gray2); border-radius:3px; overflow:hidden;">
+        <div id="progress-bar" style="height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:3px; width:0%; transition:width 0.8s ease;"></div>
+      </div>
+    </div>
+
+    <div class="rewards-tiers" data-aos="fade-up">
+      <div class="tier-card">
+        <div class="tier-icon">🥉</div>
+        <div class="tier-name">BRONCE</div>
+        <div class="tier-req">0 – 499 pts</div>
+        <div style="margin-top:12px; font-size:0.8rem; color:var(--gray3);">5% en compras</div>
+      </div>
+      <div class="tier-card" style="border-color:rgba(192,192,192,0.3);">
+        <div class="tier-icon">🥈</div>
+        <div class="tier-name">PLATA</div>
+        <div class="tier-req">500 – 1.499 pts</div>
+        <div style="margin-top:12px; font-size:0.8rem; color:var(--gray3);">10% en compras + early access</div>
+      </div>
+      <div class="tier-card" style="border-color:rgba(255,190,0,0.3);">
+        <div class="tier-icon">🥇</div>
+        <div class="tier-name">ORO</div>
+        <div class="tier-req">1.500 – 4.999 pts</div>
+        <div style="margin-top:12px; font-size:0.8rem; color:var(--gray3);">15% + drops exclusivos</div>
+      </div>
+      <div class="tier-card" style="border-color:rgba(255,61,0,0.3);">
+        <div class="tier-icon">💎</div>
+        <div class="tier-name">DIAMANTE</div>
+        <div class="tier-req">5.000+ pts</div>
+        <div style="margin-top:12px; font-size:0.8rem; color:var(--gray3);">20% + envío gratis siempre</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="main-footer">
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 <a href="index.html">SOLE CULTURE</a></p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({ duration: 700, once: true });
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx-4+'px'; cursor.style.top=my-4+'px'; });
+  (function af(){ fx+=(mx-fx-16)*0.15; fy+=(my-fy-16)*0.15; follower.style.left=fx+'px'; follower.style.top=fy+'px'; requestAnimationFrame(af); })();
+
+  function showToast(msg) {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast'; t.innerHTML = msg; c.appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 2800);
+  }
+
+  let points = parseInt(localStorage.getItem('rewardPoints')) || 0;
+  function updateUI() {
+    document.getElementById('reward-points').textContent = points;
+    const pct = Math.min((points / 500) * 100, 100);
+    document.getElementById('progress-bar').style.width = pct + '%';
+    const toNext = Math.max(500 - points, 0);
+    document.getElementById('progress-label').textContent = toNext > 0 ? `${points} / 500 pts para Plata` : '¡Nivel Plata alcanzado! 🎉';
+    localStorage.setItem('rewardPoints', points);
+  }
+  function earnPoints() {
+    const earned = Math.floor(Math.random() * 50) + 10;
+    points += earned;
+    updateUI();
+    showToast(`<i class="fa-solid fa-star" style="color:var(--accent2)"></i> +${earned} puntos ganados!`);
+  }
+  function redeemPoints() {
+    if (points < 100) {
+      showToast('<i class="fa-solid fa-triangle-exclamation" style="color:#ffbe00"></i> Necesitas al menos 100 puntos para canjear');
+      return;
+    }
+    const discount = Math.floor(points / 100) * 5;
+    points = points % 100;
+    updateUI();
+    showToast(`<i class="fa-solid fa-gift" style="color:var(--accent)"></i> ¡Canjeado! Descuento de $${discount} aplicado ✓`);
+  }
+  updateUI();
+</script>
 </body>
 </html>
