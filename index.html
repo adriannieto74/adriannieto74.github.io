@@ -4,6 +4,64 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SOLE CULTURE — Tu Tienda de Zapatillas Premium</title>
+  <meta name="description" content="Sole Culture es tu tienda premium de zapatillas online. Nike, Adidas, Jordan y más. Envío express 48h a toda España, autenticidad garantizada y más de 2.000 modelos."/>
+  <link rel="canonical" href="https://adriannieto74.github.io/"/>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23000'/><text x='50' y='68' font-size='52' font-family='Arial Black,sans-serif' font-weight='900' fill='%23c8ff00' text-anchor='middle'>SC</text></svg>"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://adriannieto74.github.io/"/>
+  <meta property="og:title" content="SOLE CULTURE — Tu Tienda de Zapatillas Premium"/>
+  <meta property="og:description" content="Sole Culture es tu tienda premium de zapatillas online. Nike, Adidas, Jordan y más. Envío express 48h a toda España, autenticidad garantizada."/>
+  <meta property="og:image" content="https://adriannieto74.github.io/Imagenes/og-cover.jpg"/>
+  <meta property="og:locale" content="es_ES"/>
+  <meta property="og:site_name" content="Sole Culture"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="SOLE CULTURE — Tu Tienda de Zapatillas Premium"/>
+  <meta name="twitter:description" content="Sole Culture es tu tienda premium de zapatillas online. Nike, Adidas, Jordan y más. Envío express 48h a toda España."/>
+  <meta name="twitter:image" content="https://adriannieto74.github.io/Imagenes/og-cover.jpg"/>
+
+  <!-- Bing Webmaster Tools — reemplaza el content con tu código real de Bing -->
+  <meta name="msvalidate.01" content="BING_VERIFICATION_CODE_AQUI"/>
+
+  <!-- Google Analytics — reemplaza G-XXXXXXXXXX con tu ID real de GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- JSON-LD: Datos estructurados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Sole Culture",
+    "url": "https://adriannieto74.github.io/",
+    "description": "Tienda premium de zapatillas online. Nike, Adidas, Jordan y más. Envío express 48h a toda España.",
+    "logo": "https://adriannieto74.github.io/Imagenes/og-cover.jpg",
+    "sameAs": [
+      "https://www.instagram.com/soleculture",
+      "https://www.linkedin.com/company/soleculture"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "ES"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": "Spanish"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="styles.css"/>
   <!-- Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -11,6 +69,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
 </head>
 <body>
+
+<!-- SKIP LINK: accesibilidad y SEO -->
+<a href="#main-content" class="skip-link" style="position:absolute;top:-999px;left:-999px;z-index:99999;padding:8px 16px;background:#c8ff00;color:#000;font-weight:700;border-radius:4px;text-decoration:none;transition:top .2s" onfocus="this.style.top='8px';this.style.left='8px'" onblur="this.style.top='-999px';this.style.left='-999px'">Saltar al contenido principal</a>
 
 <!-- CUSTOM CURSOR -->
 <div class="cursor" id="cursor"></div>
@@ -41,7 +102,7 @@
 </header>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="main-content">
   <div class="hero-noise"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
@@ -362,7 +423,8 @@
       <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
       <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
       <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="mailto:contacto@soleculture.es" class="social-link"><i class="fa-regular fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/company/soleculture" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn de Sole Culture"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="/cdn-cgi/l/email-protection#791a16170d181a0d16390a16151c1a0c150d0c0b1c571c0a" class="social-link"><i class="fa-regular fa-envelope"></i></a>
     </div>
   </div>
 </footer>
@@ -398,7 +460,7 @@
 </div>
 
 <!-- SCRIPTS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="script.js"></script>
 <script>
   // ── LOADER ──────────────────────────────────
@@ -538,13 +600,4 @@ Si preguntan algo fuera del catálogo de zapatillas, redirige amablemente hacia 
         <div class="typing-dot"></div>
       </div>`;
     c.appendChild(div);
-    c.scrollTop = c.scrollHeight;
-  }
-
-  function removeTyping() {
-    const t = document.getElementById('typing-indicator');
-    if (t) t.remove();
-  }
-</script>
-</body>
-</html>
+    c.scrollTop = c.scrol
